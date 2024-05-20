@@ -1,9 +1,8 @@
-.DEFAULT_GOAL := bin/ipxe-multiarch.iso
-.PHONY: clean nuke
+.PHONY: build clean nuke
 export
 IPXE_DOCKER_IMAGE = soi-ipxe-localbuild
 
-bin/ipxe-multiarch.iso:
+build: clean
 	$(MAKE) -C ipxe iso
 
 clean:
