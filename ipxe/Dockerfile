@@ -16,6 +16,11 @@ RUN git reset --hard ${COMMIT_HASH}
 
 RUN curl -O http://ca.ipxe.org/ca.crt
 
+RUN make -j${BUILD_THREADS} CONFIG=cloud TRUST=ca.crt bin-x86_64-pcbios/ipxe.lkrn
+RUN mv bin-x86_64-pcbios/ipxe.lkrn bin-x86_64-pcbios/aws.lkrn
+RUN make -j${BUILD_THREADS} CROSS_COMPILE=aarch64-linux-gnu- CONFIG=cloud TRUST=ca.crt bin-arm64-efi/ipxe.efi
+RUN mv bin-arm64-efi/ipxe.efi bin-arm64-efi/aws.efi
+
 COPY config/local-base/* config/local/
 
 RUN make -j${BUILD_THREADS} TRUST=ca.crt bin/ipxe.lkrn
